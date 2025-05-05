@@ -48,65 +48,65 @@ window.addEventListener('DOMContentLoaded', () => {
     resizeCanvasToDisplaySize(canvas, ctx);
     draw();
   });
-  // Перший запуск
+  
   resizeCanvasToDisplaySize(canvas, ctx);
   draw();
 
-  // 🔘 Клік по іконці кольору — відкриває/закриває кастомну палітру кольорів
+  
   colorControlLabel.addEventListener('click', () => {
     colorPalette.classList.toggle('active');
-    lineWidthPalette.classList.remove('active'); // Закриваємо палітру товщини, якщо відкрита
+    lineWidthPalette.classList.remove('active');
   });
 
-  // 🎨 Вибір кольору з кастомної палітри кольорів
+ 
   colorOptions.forEach(option => {
     option.addEventListener('click', () => {
-      drawing = false; // Зупини малювання, щоб не малювати між кольорами
+      drawing = false; 
       isErasing = false;
       const selectedColor = option.dataset.color;
       currentColor = selectedColor;
       colorPickerInput.value = selectedColor;
-      ctx.beginPath(); // 👉 почати новий шлях
+      ctx.beginPath(); 
       colorPalette.classList.remove('active');
     });
   });
   
 
-  // 📏 Клік по іконці товщини лінії — відкриває/закриває палітру товщини
+  
   lineWidthControlLabel.addEventListener('click', () => {
     lineWidthPalette.classList.toggle('active');
-    colorPalette.classList.remove('active'); // Закриваємо палітру кольорів, якщо відкрита
+    colorPalette.classList.remove('active');
   });
 
-  // 🖋️ Вибір товщини лінії з палітри
+  
   lineWidthOptions.forEach(option => {
     option.addEventListener('click', () => {
       const selectedWidth = parseInt(option.dataset.width);
       lineWidth = selectedWidth;
-      lineWidthSliderInput.value = selectedWidth; // Оновлюємо значення прихованого range input
+      lineWidthSliderInput.value = selectedWidth;
       lineWidthPalette.classList.remove('active');
     });
   });
 
-  // 🎨 Зміна кольору (через вбудований color picker, якщо його все ж таки відкриють)
+  
   colorPickerInput.addEventListener('input', () => {
     isErasing = false;
     currentColor = colorPickerInput.value;
   });
 
-  // 📏 Зміна товщини (через прихований range input)
+ 
   lineWidthSliderInput.addEventListener('input', () => {
     isErasing = false;
     lineWidth = parseInt(lineWidthSliderInput.value);
   });
 
-  // 🧽 Перемикач режиму гумки
+ 
   eraserBtn.addEventListener('click', () => {
     isErasing = true;
     eraserBtn.classList.toggle('active', isErasing);
   });
 
-  // 🖱 Початок малювання (мишою)
+  
   canvas.addEventListener('mousedown', (e) => {
     drawing = true;
     const { x, y } = getCanvasCoordinates(e);
@@ -118,7 +118,7 @@ window.addEventListener('DOMContentLoaded', () => {
   canvas.addEventListener('mouseup', () => drawing = false);
   canvas.addEventListener('mouseout', () => drawing = false);
 
-  // ✍️ Початок малювання (дотиком)
+  
   canvas.addEventListener('touchstart', (e) => {
     drawing = true;
     const { x, y } = getCanvasCoordinates(e);
@@ -129,7 +129,7 @@ window.addEventListener('DOMContentLoaded', () => {
   canvas.addEventListener('touchmove', draw);
   canvas.addEventListener('touchend', () => drawing = false);
 
-  // 🧮 Отримання точних координат
+  
   function getCanvasCoordinates(e) {
     const rect = canvas.getBoundingClientRect();
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
@@ -141,7 +141,7 @@ window.addEventListener('DOMContentLoaded', () => {
     return { x, y };
   }
 
-  // 🖌 Малювання
+  
   function draw(e) {
     if (!drawing) return;
     e.preventDefault();
@@ -158,12 +158,12 @@ window.addEventListener('DOMContentLoaded', () => {
     ctx.moveTo(x, y);
   }
 
-  // 🧹 Очистка канви
+  
   clearBtn.addEventListener('click', () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   });
 
-  // Закриваємо палітри при кліку за їх межами
+ 
   document.addEventListener('click', (event) => {
     if (!colorControlLabel.contains(event.target) && !colorPalette.contains(event.target) &&
         !lineWidthControlLabel.contains(event.target) && !lineWidthPalette.contains(event.target)) {
