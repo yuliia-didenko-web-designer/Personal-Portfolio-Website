@@ -1,3 +1,5 @@
+const canvas = document.querySelector("canvas");
+const ctx = canvas.getContext("2d");
 
 window.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('drawingCanvas');
@@ -20,21 +22,35 @@ window.addEventListener('DOMContentLoaded', () => {
   let isErasing = false;
   let currentColor = colorPickerInput.value;
   let lineWidth = parseInt(lineWidthSliderInput.value);
-
-  resizeCanvasToDisplaySize(canvas);
-
-  function resizeCanvasToDisplaySize(canvas) {
-    const rect = canvas.getBoundingClientRect();
+  
+  function resizeCanvasToDisplaySize(canvas, ctx) {
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
     const dpr = window.devicePixelRatio || 1;
-
-    canvas.width = rect.width * dpr;
-    canvas.height = rect.height * dpr;
-
-    canvas.style.width = `${rect.width}px`;
-    canvas.style.height = `${rect.height}px`;
-
-    ctx.scale(dpr, dpr);
+  
+    if (canvas.width !== width * dpr || canvas.height !== height * dpr) {
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(dpr, dpr);
+    }
   }
+  
+  function draw() {
+    const dpr = window.devicePixelRatio || 1;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.beginPath();
+    ctx.arc(canvas.width / 2 / dpr, canvas.height / 2 / dpr, 50, 0, Math.PI * 2);
+    ctx.fillStyle = "blue";
+    ctx.fill();
+  }
+  window.addEventListener("resize", () => {
+    resizeCanvasToDisplaySize(canvas, ctx);
+    draw();
+  });
+  // Перший запуск
+  resizeCanvasToDisplaySize(canvas, ctx);
+  draw();
 
   // 🔘 Клік по іконці кольору — відкриває/закриває кастомну палітру кольорів
   colorControlLabel.addEventListener('click', () => {
@@ -45,14 +61,16 @@ window.addEventListener('DOMContentLoaded', () => {
   // 🎨 Вибір кольору з кастомної палітри кольорів
   colorOptions.forEach(option => {
     option.addEventListener('click', () => {
-      drawing = true;
+      drawing = false; // Зупини малювання, щоб не малювати між кольорами
       isErasing = false;
       const selectedColor = option.dataset.color;
       currentColor = selectedColor;
       colorPickerInput.value = selectedColor;
+      ctx.beginPath(); // 👉 почати новий шлях
       colorPalette.classList.remove('active');
     });
   });
+  
 
   // 📏 Клік по іконці товщини лінії — відкриває/закриває палітру товщини
   lineWidthControlLabel.addEventListener('click', () => {
