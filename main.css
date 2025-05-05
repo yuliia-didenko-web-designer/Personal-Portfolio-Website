@@ -775,7 +775,8 @@ button:focus {
   .approach,
   .projects,
   .my-way-tablet,
-  .container {
+  .container,
+  footer {
     padding: 3rem 2rem;
   }
 
@@ -914,6 +915,18 @@ button:focus {
   }
 }
 
+@media (pointer: coarse), (max-width: 768px) {
+  * {
+    cursor: auto;
+  }
+
+  .cursor-dot,
+  .cursor-outline {
+    display: none;
+  }
+}
+
+
 .burger-icon {
   display: none;
   flex-direction: column;
@@ -984,3 +997,51 @@ button:focus {
     font-size: 1rem;
   }
 }
+
+@media (max-width: 500px) {
+
+  .tags {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .project-card {
+    padding: 1rem;
+  }
+
+  .autolayout {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .cont-education .autolayout{
+    margin-bottom: 1rem;
+  }
+  
+  .cont-education .autolayout:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .cont-education .autolayout .date p {
+    margin: 0 0 1rem 0;
+  }
+
+  .cont-education .autolayout:last-of-type .date p:last-child {
+    margin-bottom: 0;
+  }
+
+  .cont-education .autolayout .event p:first-of-type {
+    margin: 0 0 1rem 0;
+  }
+
+  .education .autolayout:last-of-type .event p:first-child {
+    margin-bottom: 1rem;
+  }
+
+  .work .autolayout .date p {
+    margin: 0 0 1rem 0;
+  }
+
+  
+  }
