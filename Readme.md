@@ -8,7 +8,7 @@ This is my personal portfolio website, as a passionate UI/UX designer. The websi
 
 ## Project Structure
 
-´´´yuliia-didenko-portfolio/
+```yuliia-didenko-portfolio/
 ├── index.html         # Main HTML file
 ├── main.css           # Stylesheet with responsive design and animations
 ├── canvas.js          # JavaScript for the interactive drawing canvas
@@ -24,7 +24,7 @@ This is my personal portfolio website, as a passionate UI/UX designer. The websi
 ├── fonts/             # Custom fonts (Tan Pearl, MabryPro)
 │   ├── tan-pearl.otf
 │   ├── MabryPro-*.ttf
-└── README.md          # Project documentation´´´
+└── README.md          # Project documentation```
 
 
 ## Features
