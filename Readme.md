@@ -74,6 +74,8 @@ yuliia-didenko-portfolio/
 
 - **Add accessibility features** (e.g., ARIA labels, keyboard navigation).
 
+- **Animate SVGs on my Approach screen** to make the screen more engaging and illustrative. 
+
 
 ## Contact
 
