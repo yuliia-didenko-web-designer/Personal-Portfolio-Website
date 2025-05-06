@@ -124,13 +124,6 @@ h1 {
   }
 }
 
-@keyframes assemble {
-  to {
-    opacity: 0;
-    transform: translate(var(--x), var(--y)) scale(0.5) rotate(var(--r));
-  }
-}
-
 .hero-screen.assemble [id^="part"] {
   animation: assemble 3s ease-in forwards;
   transform: translate(var(--x), var(--y)) scale(0.5) rotate(var(--r));

@@ -30,11 +30,3 @@ if (!isTouchDevice()) {
   cursorOutline.style.display = "none";
   document.body.style.cursor = "auto";
 }
-
-window.addEventListener("scroll", () => {
-  if (window.scrollY > 900) {
-    document.querySelector(".hero-screen").classList.add("assemble");
-  } else {
-    document.querySelector(".hero-screen").classList.remove("assemble");
-  }
-});
