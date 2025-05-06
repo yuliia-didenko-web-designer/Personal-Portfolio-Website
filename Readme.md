@@ -24,7 +24,7 @@ This is my personal portfolio website, as a passionate UI/UX designer. The websi
 ├── fonts/             # Custom fonts (Tan Pearl, MabryPro)
 │   ├── tan-pearl.otf
 │   ├── MabryPro-*.ttf
-└── README.md          # Project documentation´´
+└── README.md          # Project documentation´´´
 
 
 ## Features
