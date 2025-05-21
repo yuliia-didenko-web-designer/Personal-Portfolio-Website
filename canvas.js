@@ -1,11 +1,7 @@
-const canvas = document.querySelector("canvas");
-const ctx = canvas.getContext("2d");
-
 window.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('drawingCanvas');
   const ctx = canvas.getContext('2d');
 
-  const colorPickerInput = document.getElementById('colorPicker');
   const colorControlLabel = document.querySelector('.color-control label[title="Choose color"]');
   const colorPalette = document.querySelector('.color-palette');
   const colorOptions = document.querySelectorAll('.color-option');
@@ -13,15 +9,15 @@ window.addEventListener('DOMContentLoaded', () => {
   const lineWidthControlLabel = document.querySelector('.linewidth-control label[title="Line width"]');
   const lineWidthPalette = document.querySelector('.linewidth-palette');
   const lineWidthOptions = document.querySelectorAll('.linewidth-option');
-  const lineWidthSliderInput = document.getElementById('lineWidthSlider');
 
   const clearBtn = document.getElementById('delete-button');
   const eraserBtn = document.getElementById('eraser-button');
 
   let drawing = false;
   let isErasing = false;
-  let currentColor = colorPickerInput.value;
-  let lineWidth = parseInt(lineWidthSliderInput.value);
+  let lineWidth = 3;
+  let currentColor = '#000000';
+
   
   function resizeCanvasToDisplaySize(canvas, ctx) {
     const width = canvas.clientWidth;
@@ -36,21 +32,11 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   }
   
-  function draw() {
-    const dpr = window.devicePixelRatio || 1;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.beginPath();
-    ctx.arc(canvas.width / 2 / dpr, canvas.height / 2 / dpr, 50, 0, Math.PI * 2);
-    ctx.fillStyle = "blue";
-    ctx.fill();
-  }
+  resizeCanvasToDisplaySize(canvas, ctx);
+
   window.addEventListener("resize", () => {
     resizeCanvasToDisplaySize(canvas, ctx);
-    draw();
   });
-  
-  resizeCanvasToDisplaySize(canvas, ctx);
-  draw();
 
   
   colorControlLabel.addEventListener('click', () => {
@@ -65,13 +51,11 @@ window.addEventListener('DOMContentLoaded', () => {
       isErasing = false;
       const selectedColor = option.dataset.color;
       currentColor = selectedColor;
-      colorPickerInput.value = selectedColor;
       ctx.beginPath(); 
       colorPalette.classList.remove('active');
     });
   });
   
-
   
   lineWidthControlLabel.addEventListener('click', () => {
     lineWidthPalette.classList.toggle('active');
@@ -83,30 +67,15 @@ window.addEventListener('DOMContentLoaded', () => {
     option.addEventListener('click', () => {
       const selectedWidth = parseInt(option.dataset.width);
       lineWidth = selectedWidth;
-      lineWidthSliderInput.value = selectedWidth;
       lineWidthPalette.classList.remove('active');
     });
   });
 
-  
-  colorPickerInput.addEventListener('input', () => {
-    isErasing = false;
-    currentColor = colorPickerInput.value;
-  });
-
- 
-  lineWidthSliderInput.addEventListener('input', () => {
-    isErasing = false;
-    lineWidth = parseInt(lineWidthSliderInput.value);
-  });
-
- 
   eraserBtn.addEventListener('click', () => {
     isErasing = true;
     eraserBtn.classList.toggle('active', isErasing);
   });
 
-  
   canvas.addEventListener('mousedown', (e) => {
     drawing = true;
     const { x, y } = getCanvasCoordinates(e);
@@ -134,13 +103,12 @@ window.addEventListener('DOMContentLoaded', () => {
     const rect = canvas.getBoundingClientRect();
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
     const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-
+  
     const x = clientX - rect.left;
     const y = clientY - rect.top;
-
+  
     return { x, y };
   }
-
   
   function draw(e) {
     if (!drawing) return;
@@ -148,7 +116,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const { x, y } = getCanvasCoordinates(e);
 
-    ctx.lineWidth = isErasing ? lineWidth * 15 : lineWidth;
+    ctx.lineWidth = isErasing ? lineWidth * 5 : lineWidth;
     ctx.lineCap = 'round';
     ctx.strokeStyle = isErasing ? '#ffffff' : currentColor;
 
